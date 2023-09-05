@@ -41,7 +41,7 @@ To reference secrets in the deployment descriptor, you'll need to pass the versi
 
 `projects/[Project-Number]/secrets/[Secret-Name]/versions/[Version-Number|latest]`
 
-To retrieve the reference path of a secrets version in Secret Manager simply click "Copy resource name" on the three dots behind a version. Specifying `latest` as the version will supply the highest active version of a sceret.
+To retrieve the reference path of a secrets version in Secret Manager simply click "Copy resource name" on the three dots behind a version. Specifying `latest` as the version will supply the highest active version of a secret.
 
 ## 
 
