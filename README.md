@@ -25,14 +25,14 @@ In the code, simply call the async `getEnvSecrets` function and access the envir
 const { getEnvSecrets } = require('@tsmx/gae-env-secrets');
 
 getEnvSecrets().then(() => {
-    const secret = process.env['PASSWORD_SECRET']; // contains the value of MY_SECRET stored in Secret Manager
+    const secret = process.env['PASSWORD_SECRET']; // value of MY_SECRET from Secret Manager
 });
 
 // ESM
 import { getEnvSecrets } from '@tsmx/gae-env-secrets';
 
 await getEnvSecrets();
-const secret = process.env['PASSWORD_SECRET']; // contains the value of MY_SECRET stored in Secret Manager
+const secret = process.env['PASSWORD_SECRET']; // value of MY_SECRET from Secret Manager
 ```
 
 **Note**: Since the `getEnvSecrets` function is async you'll need to `await` the result or chain on using `.then` to be able to work with the secret values. CommonJS does not support top-level await.
