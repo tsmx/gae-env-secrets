@@ -2,9 +2,10 @@ const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 const client = new SecretManagerServiceClient();
 
 const defaultSuffix = '_SECRET';
+const defaultStrictMode = true;
 
 function getOptValue(options, optName, defaultOptValue) {
-    if (options && options[optName]) {
+    if (options && options[optName] !== undefined) {
         return options[optName];
     }
     else {
@@ -19,6 +20,7 @@ async function getSecret(secretName) {
 
 async function getEnvSecrets(options) {
     const suffix = getOptValue(options, 'suffix', defaultSuffix);
+    const strictMode = getOptValue(options, 'strict', defaultStrictMode);
     if (!process.env['GAE_SERVICE'] && !process.env['GAE_RUNTIME']) {
         console.log('Not running in GAE. Nothing to do for getEnvSecrets.');
         return;
@@ -33,6 +35,7 @@ async function getEnvSecrets(options) {
             }
             catch (error) {
                 console.error(`Could not retrieve secret for key ${key}: ${error.message}`);
+                if (strictMode) throw (error);
             }
         }
     }
