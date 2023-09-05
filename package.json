@@ -1,7 +1,7 @@
 {
   "name": "@tsmx/gae-env-secrets",
-  "version": "1.0.0",
-  "description": "Retrieving Google App Engine environment variables from Secret Manager.",
+  "version": "0.1.0",
+  "description": "Setting environment variables from Secret Manager in Google App Engine.",
   "main": "index.js",
   "author": "tsmx <dev@tsmx.net>",
   "license": "MIT",
@@ -10,5 +10,12 @@
   },
   "devDependencies": {
     "eslint": "^8.48.0"
-  }
+  },
+  "keywords": [
+    "GAE",
+    "App Engine",
+    "Secret Manager",
+    "GCP",
+    "environment variables"
+  ]
 }
