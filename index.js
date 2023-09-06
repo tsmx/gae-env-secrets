@@ -3,6 +3,9 @@ const client = new SecretManagerServiceClient();
 
 const defaultSuffix = '_SECRET';
 const defaultStrictMode = true;
+const defaultAutoDetect = false;
+
+const autoDetectRegEx = new RegExp(/^projects\/\d*\/secrets\/.*\/versions\/(\d*|latest)$/);
 
 function getOptValue(options, optName, defaultOptValue) {
     if (options && options[optName] !== undefined) {
@@ -21,13 +24,14 @@ async function getSecret(secretName) {
 async function getEnvSecrets(options) {
     const suffix = getOptValue(options, 'suffix', defaultSuffix);
     const strictMode = getOptValue(options, 'strict', defaultStrictMode);
+    const autoDetect = getOptValue(options, 'auto', defaultAutoDetect);
     if (!process.env['GAE_SERVICE'] && !process.env['GAE_RUNTIME']) {
         console.log('Not running in GAE. Nothing to do for getEnvSecrets.');
         return;
     }
     console.log('Starting getEnvSecrets');
     for (const [key, value] of Object.entries(process.env)) {
-        if (key.endsWith(suffix)) {
+        if (key.endsWith(suffix) || autoDetect && autoDetectRegEx.test(value)) {
             console.log(`Retrieving secret for key ${key}`);
             try {
                 const secret = await getSecret(value);

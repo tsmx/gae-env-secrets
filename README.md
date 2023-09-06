@@ -16,21 +16,21 @@ env_variables:
   PASSWORD_SECRET: "projects/100374066341/secrets/MY_PASSWORD/versions/latest"
 ```
 
-In your code, simply call the async `getEnvSecrets` function from the package and access the environment variables to access the secret values.
+In your code, simply call the async `getEnvSecrets` function from the package and use the environment variables to access the secret values.
 
 ```js
 // CommonJS
 const { getEnvSecrets } = require('@tsmx/gae-env-secrets');
 
 getEnvSecrets().then(() => {
-    const secret = process.env['PASSWORD_SECRET']; // value of MY_SECRET from Secret Manager
+  const secret = process.env['PASSWORD_SECRET']; // value of MY_PASSWORD from Secret Manager
 });
 
 // ESM
 import { getEnvSecrets } from '@tsmx/gae-env-secrets';
 
 await getEnvSecrets();
-const secret = process.env['PASSWORD_SECRET']; // value of MY_SECRET from Secret Manager
+const secret = process.env['PASSWORD_SECRET']; // value of MY_PASSWORD from Secret Manager
 ```
 
 **Note**: Since the `getEnvSecrets` function is async you'll need to `await` the result or chain on using `.then` to be able to work with the secret values. CommonJS does not support top-level await.
@@ -41,8 +41,6 @@ To reference secrets in the deployment descriptor, you'll need to pass the versi
 
 `projects/[Project-Number]/secrets/[Secret-Name]/versions/[Version-Number|latest]`
 
-To retrieve the reference path of a secrets version in Secret Manager simply click "Copy resource name" on the three dots behind a version. Specifying `latest` as the version will supply the highest active version of a secret.
-
-## 
+To retrieve the reference path of a secrets version in Secret Manager simply click "Copy resource name" on the three dots behind a version. Specifying `latest` as the version will supply the highest active version of a secret. 
 
 
