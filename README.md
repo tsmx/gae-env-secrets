@@ -63,7 +63,7 @@ If running under GAE is detected, `gae-env-secrets` will iterate through all env
 - The name of the env var ends with `_SECRET` (default suffix) or another deviating suffix passed via the [options](), or
 - Auto-Detection is enabled and the value of the anv var matches a Secret Manager secret reference
 
-### Error handling if secret cannot be resolved
+### Error handling
 
 By default and for security reasons, the library will `throw` an error if substituting an env vars value from Secret Manager fails for any reason...
 - secret reference invalid
@@ -72,7 +72,9 @@ By default and for security reasons, the library will `throw` an error if substi
 - missing permissions to access Secret Manager
 - ...
 
-So make sure to use an appropriate error handling with `try/catch` or `.catch()`. To change this behaviour, use the `strict` property available in the [options]().
+So make sure to use an appropriate error handling with `try/catch` or `.catch()`. 
+
+To change this behaviour, use the `strict` property available in the [options]().
 
 ## Passing options to getEnvSecrets
 
