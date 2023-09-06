@@ -24,7 +24,7 @@ async function getSecret(secretName) {
 async function getEnvSecrets(options) {
     const suffix = getOptValue(options, 'suffix', defaultSuffix);
     const strictMode = getOptValue(options, 'strict', defaultStrictMode);
-    const autoDetect = getOptValue(options, 'auto', defaultAutoDetect);
+    const autoDetect = getOptValue(options, 'autoDetect', defaultAutoDetect);
     if (!process.env['GAE_SERVICE'] && !process.env['GAE_RUNTIME']) {
         console.log('Not running in GAE. Nothing to do for getEnvSecrets.');
         return;
