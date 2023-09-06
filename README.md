@@ -60,7 +60,7 @@ To simulate running under GAE, simply set those two env vars to anything.
 ### Substituting env vars from Secret Manager
 
 If running under GAE is detected, `gae-env-secrets` will iterate through all env vars and substitute the value with the corresponding secret derived from Secret Manager if one of the following condition is true:
-- The name of the env var ends with `_SECRET` (default suffix) or another deviating suffix passed via the [options](#options), or
+- The name of the env var ends with `_SECRET` (default suffix) or another deviating suffix passed via the [options](#passing-options-to-getenvsecrets), or
 - Auto-Detection is enabled and the value of the anv var matches a Secret Manager secret reference
 
 ### Error handling
@@ -74,7 +74,7 @@ By default and for security reasons, the library will `throw` an error if substi
 
 So make sure to use an appropriate error handling with `try/catch` or `.catch()`. 
 
-To change this behaviour, use the `strict` property available in the [options](#options).
+To change this behaviour, use the `strict` property available in the [options](#passing-options-to-getenvsecrets).
 
 ## Passing options to getEnvSecrets
 
