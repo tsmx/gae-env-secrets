@@ -1,7 +1,7 @@
 {
-  "name": "@tsmx/gae-env-secrets",
+  "name": "gae-env-secrets",
   "version": "0.1.0",
-  "description": "Setting environment variables from Secret Manager in Google App Engine.",
+  "description": "Seamlessly integrates GCP Secret Manager with App Engine environment variables.",
   "main": "index.js",
   "author": "tsmx <dev@tsmx.net>",
   "license": "MIT",
@@ -10,6 +10,10 @@
   },
   "devDependencies": {
     "eslint": "^8.48.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsmx/gae-env-secrets.git"
   },
   "keywords": [
     "GAE",
