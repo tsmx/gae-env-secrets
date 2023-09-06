@@ -6,7 +6,7 @@ Works with CommonJS and ESM/ECMAScript.
 
 ## Usage
 
-Create your secrets in Secret Manager and reference them in the App Engine deployment descriptor `app.yaml`.
+Create your secrets in [Secret Manager](https://cloud.google.com/secret-manager) and reference them in the App Engine deployment descriptor `app.yaml`.
 
 ```yaml
 service: my-service
@@ -113,7 +113,7 @@ getEnvSecrets({ strict: false });
 Type: `Boolean`
 Default: `false`
 
-The `autoDetect` feature enables automatic detection of env var values that contain a Secret Manager secret reference for substitution rgeardsledd of the suffix and env vars name.
+The `autoDetect` feature enables automatic detection of env var values that contain a Secret Manager secret reference for substitution regardless of the suffix and env vars name.
 
 This feature is additional to the provided suffix, meaning that all env vars ending with the suffix AND all automatically detected will be substituted.
 
