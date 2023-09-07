@@ -20,7 +20,7 @@ In your code, simply call the async `getEnvSecrets` function from the package an
 
 **CommonJS**
 ```js
-const { getEnvSecrets } = require('@tsmx/gae-env-secrets');
+const { getEnvSecrets } = require('gae-env-secrets');
 
 getEnvSecrets().then(() => {
   const secret = process.env['PASSWORD_SECRET']; // value of MY_PASSWORD from Secret Manager
@@ -29,7 +29,7 @@ getEnvSecrets().then(() => {
 
 **ESM**
 ```js
-import { getEnvSecrets } from '@tsmx/gae-env-secrets';
+import { getEnvSecrets } from 'gae-env-secrets';
 
 await getEnvSecrets();
 const secret = process.env['PASSWORD_SECRET']; // value of MY_PASSWORD from Secret Manager
