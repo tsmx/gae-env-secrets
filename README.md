@@ -56,7 +56,7 @@ env_variables:
 
 ### Granting Secret Manager rights to the GAE service account
 
-In order to resolve secrets from Secret Manager, the principal running your App Engine service - by default `PROJECT_ID@appspot.gserviceaccount.com` - must have at lesat the `Secret Manager Secret Accessor` role. For more details refer to the [Secret Manager access control documentation](https://cloud.google.com/secret-manager/docs/access-control)
+In order to resolve secrets from Secret Manager, the service account principal running your App Engine service - by default `PROJECT_ID@appspot.gserviceaccount.com` - must have at lesat the `Secret Manager Secret Accessor` role. For more details refer to the [Secret Manager access control documentation](https://cloud.google.com/secret-manager/docs/access-control).
 
 If this is not already the case, go to IAM in the console and edit the App Engine principal. There, click "Add another role" and search for `Secret Manager Secret Accessor` and save.
 
