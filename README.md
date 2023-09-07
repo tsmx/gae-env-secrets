@@ -56,7 +56,7 @@ env_variables:
 
 ### Granting Secret Manager rights to the GAE service account
 
-In order to resolve secrets from Secret Manager, the service account principal running your App Engine service - by default `PROJECT_ID@appspot.gserviceaccount.com` - must have at lesat the `Secret Manager Secret Accessor` role. For more details refer to the [Secret Manager access control documentation](https://cloud.google.com/secret-manager/docs/access-control).
+In order to resolve secrets from Secret Manager, the service account principal running your App Engine service - by default `PROJECT_ID@appspot.gserviceaccount.com` - must have at least the `Secret Manager Secret Accessor` role. For more details refer to the [Secret Manager access control documentation](https://cloud.google.com/secret-manager/docs/access-control).
 
 If this is not already the case, go to IAM in the console and edit the App Engine principal. There, click "Add another role" and search for `Secret Manager Secret Accessor` and save.
 
@@ -64,7 +64,7 @@ If this is not already the case, go to IAM in the console and edit the App Engin
 
 ### Determining the environment
 
-`gae-env-secrets` will evaluate environment variables to detect if it is are running directly in App Engine. If the following env vars both are present, the library would assume it's running in GAE and substitute relevant env vars with their respective secret values from Secret Manager:
+`gae-env-secrets` will evaluate environment variables to detect if it is running directly in App Engine. If the following env vars both are present, the library would assume it's running in GAE and substitute relevant env vars with their respective secret values from Secret Manager:
 - `GAE_SERVICE`
 - `GAE_RUNTIME`
 
@@ -75,17 +75,17 @@ To simulate running under GAE, simply set those two env vars to anything.
 ### Substituting env vars from Secret Manager
 
 If running under GAE is detected, `gae-env-secrets` will iterate through all env vars and substitute the value with the corresponding secret derived from Secret Manager if one of the following condition is true:
-- The name of the env var ends with `_SECRET` (default suffix) or another deviating suffix passed via the [options](#passing-options-to-getenvsecrets), or
-- Auto-Detection is enabled and the value of the anv var matches a Secret Manager secret reference
+- The name of the env var ends with `_SECRET` (default suffix) or another deviating suffix passed via the [options](#passing-options-to-getenvsecrets)
+- [Auto-Detection](#autodetect) is enabled via options and the value of the anv var matches a Secret Manager secret reference
 
 ### Error handling
 
 By default and for security reasons, the library will `throw` an error if substituting an env vars value from Secret Manager fails for any reason...
-- secret reference invalid
+- secret reference is invalid
 - secret is inactive or not present
 - invalid version number
 - missing permissions to access Secret Manager
-- ...
+- or else...
 
 So make sure to use an appropriate error handling with `try/catch` or `.catch()`. 
 
@@ -139,7 +139,7 @@ To turn on this feature, pass `true` in the options object.
 getEnvSecret({ autoDetect: true });
 ```
 
-Example: Having this feature enabled, the following env var would be substituted regardless of the suffix because is contains a value of a Secret Manager secret reference.
+Example: Having this feature enabled, the following env var would be substituted with version 2 of the secret `MY_SECRET` regardless of the suffix because is contains a value of a Secret Manager reference.
 
 ```yaml
 env_variables:
