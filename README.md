@@ -138,3 +138,10 @@ To turn on this feature, pass `true` in the options object.
 // turn on autoDetect
 getEnvSecret({ autoDetect: true });
 ```
+
+Example: Having this feature enabled, the following env var would be substituted regardless of the suffix because is contains a value of a Secret Manager secret reference.
+
+```yaml
+env_variables:
+  VAR_WITH_ANY_NAME: "projects/00112233/secrets/MY_SECRET/versions/2"
+```
