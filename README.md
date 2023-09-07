@@ -39,11 +39,26 @@ Note: Since the `getEnvSecrets` function is async you'll need to `await` the res
 
 ## Using Secret Manager secrets in app.yaml
 
-To reference secrets in the deployment descriptor, you'll need to pass the versioned reference to the secret from Secret Manager. This has the form of...
+### Referencing secrets
+
+To reference secrets in the deployment descriptor, you'll need to pass the versioned reference of the secret from Secret Manager. This has the form of...
 
 `projects/[Project-Number]/secrets/[Secret-Name]/versions/[Version-Number|latest]`
 
-To retrieve the reference path of a secrets version in Secret Manager simply click "Copy resource name" on the three dots behind a version. Specifying `latest` as the version will supply the highest active version of a secret. 
+To retrieve the reference path of a secrets version in Secret Manager simply click "Copy resource name" on the three dots behind a version. Specifying `latest` as the version will supply the highest active version of a secret.
+
+Then pass the secrets reference to the desired variable in the `env_variables` block of the deployment descriptor, like so...
+
+```yaml
+env_variables:
+  SECRET_ENV_VAR: "projects/[Project-Number]/secrets/[Secret-Name]/versions/[Version-Number|latest]"
+```
+
+### Granting Secret Manager rights to the GAE service account
+
+In order to resolve secrets from Secret Manager, the principal running your App Engine service - by default PROJECT_ID@appspot.gserviceaccount.com - must have the `Secret Manager Secret Accessor` role.
+
+If this is not already the case, go to IAM in the console and edit this principal. There, click "Add another role" and search for `Secret Manager Secret Accessor` and save.
 
 ## How it works
 
