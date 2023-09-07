@@ -2,6 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![npm](https://img.shields.io/npm/v/gae-env-secrets)
+![node-current](https://img.shields.io/node/v/gae-env-secrets)
 
 >  Seamlessly integrates GCP Secret Manager with App Engine environment variables.
 
