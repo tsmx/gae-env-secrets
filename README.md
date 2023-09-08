@@ -6,7 +6,7 @@
 
 >  Seamlessly integrates GCP Secret Manager with App Engine environment variables.
 
-Works with CommonJS and ESM/ECMAScript.
+Works with CommonJS and ESM/ECMAScript. Does not create a vendor-lock in or makes your code "App Engine only" - still works in any other environment. For details refer to [determining the environment](#determining-the-environment).
 
 ## Usage
 
@@ -39,7 +39,9 @@ await getEnvSecrets();
 const secret = process.env['PASSWORD_SECRET']; // value of MY_PASSWORD from Secret Manager
 ```
 
-Note: Since the `getEnvSecrets` function is async you'll need to `await` the result or chain on using `.then` to be able to work with the secret values. CommonJS does not support top-level await.
+*Notes:* 
+- Since the `getEnvSecrets` function is async you'll need to `await` the result or chain on using `.then` to be able to work with the secret values. CommonJS does not support top-level await. 
+- As the env var secrets are resolved at runtime of your code, any top-level code of other modules that is executed upon require/import cannot make use of the secret values and instead would see the secret references as values of the env vars.
 
 ## Using Secret Manager secrets in app.yaml
 
