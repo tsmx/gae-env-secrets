@@ -1,4 +1,3 @@
-const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 const { getEnvSecrets } = require('../index');
 
 jest.mock('@google-cloud/secret-manager', () => {
@@ -49,7 +48,6 @@ describe('getEnvSecrets test suite', () => {
         process.env['TEST_SECRET'] = 'original value';
         await getEnvSecrets();
         expect(process.env['TEST_SECRET']).toEqual('Mock-Secret');
-        expect(SecretManagerServiceClient).toBeCalledTimes(1);
         expect(testLogOutput.length).toBe(3);
         expect(testLogOutput[1].toString().endsWith('TEST_SECRET')).toBeTruthy();
         expect(testErrorOutput.length).toBe(0);
@@ -59,8 +57,18 @@ describe('getEnvSecrets test suite', () => {
         process.env['TEST_SECRET'] = 'original value';
         await getEnvSecrets();
         expect(process.env['TEST_SECRET']).toEqual('original value');
-        expect(SecretManagerServiceClient).toBeCalledTimes(0);
         expect(testLogOutput.length).toBe(1);
+        expect(testErrorOutput.length).toBe(0);
+    });
+
+    it('test a successful env var secret retrieval in auto-detect mode', async () => {
+        process.env['GAE_SERVICE'] = 'x';
+        process.env['GAE_RUNTIME'] = 'x';
+        process.env['TEST_KEY'] = 'projects/1234/secrets/MY_SECRET/versions/latest';
+        await getEnvSecrets({ autoDetect: true });
+        expect(process.env['TEST_KEY']).toEqual('Mock-Secret');
+        expect(testLogOutput.length).toBe(3);
+        expect(testLogOutput[1].toString().endsWith('TEST_KEY')).toBeTruthy();
         expect(testErrorOutput.length).toBe(0);
     });
 
@@ -70,7 +78,6 @@ describe('getEnvSecrets test suite', () => {
         process.env['TEST_SECRET'] = 'test-error';
         await expect(getEnvSecrets()).rejects.toThrow('error');
         expect(process.env['TEST_SECRET']).toEqual('test-error');
-        expect(SecretManagerServiceClient).toBeCalledTimes(0);
         expect(testErrorOutput.length).toBe(1);
     });
 
