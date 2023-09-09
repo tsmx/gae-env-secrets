@@ -3,6 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![npm](https://img.shields.io/npm/v/gae-env-secrets)
 ![node-current](https://img.shields.io/node/v/gae-env-secrets)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tsmx/gae-env-secrets/git-build.yml?branch=master)](https://img.shields.io/github/actions/workflow/status/tsmx/gae-env-secrets/git-build.yml?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/tsmx/gae-env-secrets/badge.svg?branch=master)](https://coveralls.io/github/tsmx/gae-env-secrets?branch=master)
 
 >  Seamlessly integrates GCP Secret Manager with App Engine environment variables.
 
