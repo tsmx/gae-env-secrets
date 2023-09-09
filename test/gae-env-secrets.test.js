@@ -81,4 +81,14 @@ describe('getEnvSecrets test suite', () => {
         expect(testErrorOutput.length).toBe(1);
     });
 
+
+    it('test a failed env var secret retrieval logging an error in non-strict mode', async () => {
+        process.env['GAE_SERVICE'] = 'x';
+        process.env['GAE_RUNTIME'] = 'x';
+        process.env['TEST_SECRET'] = 'test-error';
+        await getEnvSecrets({ strict: false });
+        expect(process.env['TEST_SECRET']).toEqual('test-error');
+        expect(testErrorOutput.length).toBe(1);
+    });
+
 });
