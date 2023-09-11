@@ -1,17 +1,19 @@
 const { getEnvSecrets } = require('../index');
 
+const mockAccessSecretVersion = jest.fn((params) => {
+    if (params.name == 'test-error') {
+        throw new Error('error');
+    }
+    else {
+        return Promise.resolve([{ payload: { data: 'Mock-Secret' } }]);
+    }
+});
+
 jest.mock('@google-cloud/secret-manager', () => {
     return {
         SecretManagerServiceClient: jest.fn(() => {
             return {
-                accessSecretVersion: jest.fn((params) => {
-                    if (params.name == 'test-error') {
-                        throw new Error('error');
-                    }
-                    else {
-                        return Promise.resolve([{ payload: { data: 'Mock-Secret' } }]);
-                    }
-                })
+                accessSecretVersion: jest.fn((params) => mockAccessSecretVersion(params))
             };
         })
     };
@@ -37,9 +39,9 @@ describe('getEnvSecrets test suite', () => {
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
         console.log = originalConsoleLog;
         console.error = originalConsoleError;
+        mockAccessSecretVersion.mockClear();
     });
 
     it('test a successful env var secret retrieval', async () => {
@@ -47,6 +49,7 @@ describe('getEnvSecrets test suite', () => {
         process.env['GAE_RUNTIME'] = 'x';
         process.env['TEST_SECRET'] = 'original value';
         await getEnvSecrets();
+        expect(mockAccessSecretVersion).toHaveBeenCalledTimes(1);
         expect(process.env['TEST_SECRET']).toEqual('Mock-Secret');
         expect(testLogOutput.length).toBe(3);
         expect(testLogOutput[1].toString().endsWith('TEST_SECRET')).toBeTruthy();
@@ -56,6 +59,7 @@ describe('getEnvSecrets test suite', () => {
     it('test a \'nothing-to-do\' beacuse GAE is not detected', async () => {
         process.env['TEST_SECRET'] = 'original value';
         await getEnvSecrets();
+        expect(mockAccessSecretVersion).toHaveBeenCalledTimes(0);
         expect(process.env['TEST_SECRET']).toEqual('original value');
         expect(testLogOutput.length).toBe(1);
         expect(testErrorOutput.length).toBe(0);
@@ -66,6 +70,7 @@ describe('getEnvSecrets test suite', () => {
         process.env['GAE_RUNTIME'] = 'x';
         process.env['TEST_KEY'] = 'projects/1234/secrets/MY_SECRET/versions/latest';
         await getEnvSecrets({ autoDetect: true });
+        expect(mockAccessSecretVersion).toHaveBeenCalledTimes(1);
         expect(process.env['TEST_KEY']).toEqual('Mock-Secret');
         expect(testLogOutput.length).toBe(3);
         expect(testLogOutput[1].toString().endsWith('TEST_KEY')).toBeTruthy();
@@ -77,6 +82,7 @@ describe('getEnvSecrets test suite', () => {
         process.env['GAE_RUNTIME'] = 'x';
         process.env['TEST_SECRET'] = 'test-error';
         await expect(getEnvSecrets()).rejects.toThrow('error');
+        expect(mockAccessSecretVersion).toHaveBeenCalledTimes(1);
         expect(process.env['TEST_SECRET']).toEqual('test-error');
         expect(testErrorOutput.length).toBe(1);
     });
@@ -87,6 +93,7 @@ describe('getEnvSecrets test suite', () => {
         process.env['GAE_RUNTIME'] = 'x';
         process.env['TEST_SECRET'] = 'test-error';
         await getEnvSecrets({ strict: false });
+        expect(mockAccessSecretVersion).toHaveBeenCalledTimes(1);
         expect(process.env['TEST_SECRET']).toEqual('test-error');
         expect(testErrorOutput.length).toBe(1);
     });
