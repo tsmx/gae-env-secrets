@@ -1,13 +1,13 @@
 {
   "name": "gae-env-secrets",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Seamlessly integrates GCP Secret Manager with App Engine environment variables.",
   "main": "index.js",
   "author": "tsmx <dev@tsmx.net>",
   "homepage": "https://tsmx.net/integrating-gcp-secret-manager-with-app-engine-environment-variables/",
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=9.0.0"
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
   },
   "scripts": {
     "test": "jest",
