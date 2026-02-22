@@ -18,8 +18,8 @@
     "@google-cloud/secret-manager": "^6.0.0"
   },
   "devDependencies": {
-    "eslint": "^9.15.0",
-    "jest": "^29.6.4"
+    "eslint": "^10.0.1",
+    "jest": "^30.2.0"
   },
   "repository": {
     "type": "git",
