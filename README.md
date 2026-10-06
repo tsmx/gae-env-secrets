@@ -16,7 +16,7 @@ Create your secrets in [Secret Manager](https://cloud.google.com/secret-manager)
 
 ```yaml
 service: my-service
-runtime: nodejs20
+runtime: nodejs22
 
 env_variables:
   PASSWORD_SECRET: "projects/100374066341/secrets/MY_PASSWORD/versions/latest"
